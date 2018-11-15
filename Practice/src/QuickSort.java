@@ -1,0 +1,51 @@
+import java.util.*;
+
+public class QuickSort {
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		System.out.print("Enter the number of elements to be inputted:");
+		int nums = input.nextInt();
+		int arr[] = new int[nums];
+		for(int i=0;i<arr.length;i++) {
+			System.out.print("Next element:");
+			arr[i] = input.nextInt();
+		}
+		System.out.println("Elements before sorting:"+Arrays.toString(arr));
+		int low = 0;
+		int high = nums-1;
+		QuickSort qs = new QuickSort();
+		qs.quicksort(arr, low, high);
+		System.out.println("Elements after sorting:"+qs.printArray(arr));
+	}
+	
+	void quicksort(int arr[], int low, int high) {
+		if(low<high) {
+			int pi = this.partition(arr, low, high);
+			
+			this.quicksort(arr, low, pi-1);
+			this.quicksort(arr, pi+1, high);
+		}
+		
+	}
+	int partition(int[] arr, int low, int high) {
+		int pivot = arr[high];
+		int i = low-1;
+		for(int j=low; j<high;j++) {
+			if(arr[j]<= pivot) {
+				i++;
+				int temp = arr[i];
+				arr[j] = arr[i];
+				arr[i] = temp;
+			}
+			
+		}
+		int swap = arr[high];
+		arr[high] = arr[i+1];
+		arr[i+1] = swap;
+		return (i+1);
+	}
+	String printArray(int arr[]) {
+		return Arrays.toString(arr);
+	}
+
+}

@@ -1,0 +1,44 @@
+import java.util.*;
+
+public class QuickSort {
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		System.out.print("Enter the number of elements to be inputted");
+		int nums = input.nextInt();
+		int arr[] = new int[nums];
+		for(int i=0;i<arr.length;i++) {
+			System.out.print("Next element:");
+			arr[i] = input.nextInt();
+		}
+		System.out.print("Elements before sorting:"+Arrays.toString(arr));
+		int low = 0;
+		int high = nums-1;
+		QuickSort qs = new QuickSort();
+	}
+	
+	int[] quicksort(int arr[], int low, int high) {
+		if(low<high) {
+			int pi = this.partition(arr, low, high);
+			
+			this.quicksort(arr, low, pi-1);
+			this.quicksort(arr, pi+1, high);
+		}
+		return arr;
+		
+	}
+	int partition(int[] arr, int low, int high) {
+		int pivot = arr[high];
+		int i = low-1;
+		for(int j=low; j<high;j++) {
+			if(arr[j]<= pivot) {
+				i++;
+				int temp = arr[i];
+				arr[j] = arr[i];
+				arr[i] = temp;
+			}
+			
+		}
+		return (i+1);
+	}
+
+}
