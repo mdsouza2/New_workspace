@@ -2,98 +2,100 @@ import java.util.*;
 
 public class LinkedList {
 	Node head;
-	static class Node{
+	public static class Node{
 		int data;
 		Node next;
 		Node(int d){
-			data = d;
-			next = null;
+			this.data=d;
+			this.next=null;
 		}
 	}
-	public void push(int new_data) {
+	void push(int new_data) {
 		Node new_node = new Node(new_data);
 		new_node.next = this.head;
 		this.head = new_node;
 	}
-	public void insertAfter(int new_data, Node prev_node) {
+	void insertAfter(int new_data, Node prev_node) {
 		Node new_node = new Node(new_data);
-		if(prev_node==null) {
-			System.out.println("Previous node does not exist");
+		if(prev_node==null){
+			System.out.println("Previous node cannot be null");
 			return;
 		}
 		Node last = this.head;
-		while(last.next != null) {
-			if(last.data == prev_node.data) {
-				System.out.println("Previous node exists");
+		while(last.next!=null) {
+			if(last.data==prev_node.data)
 				break;
-			}
-			else
+			else {
 				last = last.next;
-			if(last.next==null) {
-				System.out.println("Previous node does not exist");
-				return;
 			}
-			new_node.next = prev_node.next;
-			prev_node.next = new_node;
 		}
+		if(last.next==null) {
+			System.out.println("Previous node does not exist!");
+			return;
+		}
+		new_node.next = prev_node.next;
+		prev_node.next = new_node;
 	}
-	public void append(int new_data) {
+	void append(int new_data) {
 		Node new_node = new Node(new_data);
 		if(this.head==null) {
 			this.head = new_node;
 			return;
 		}
-		Node last = this.head;
-		while(last.next != null) {
-			last = last.next;
-		}
-		last.next = new_node;
-	}
-	public void deleteNode(int key) {
 		Node temp = this.head;
-		if(temp != null) {
+		while(temp.next!=null) {
+			temp = temp.next;
+		}
+		temp.next = new_node;
+	}
+	void deleteNode(int key) {
+		Node temp = this.head;
+		if(temp!=null) {
 			if(temp.data==key) {
-				this.head = temp.next;
+				this.head=temp.next;
 				temp = null;
-				return;
 			}
 		}
-		while(temp != null) {
-			if(temp.data==key) {break;}
-		}
-		//System.out.println("Check here");
-		Node prev = temp;
-		temp = temp.next;
-		if(temp==null)
-			return;
-		prev.next = temp.next;
+		Node prev = null;
+		while(temp!=null) {
+			if(temp.data==key)
+				break;
+			prev = temp;
+			temp = temp.next;
+			}
+		if(temp==null) {
+			System.out.println("Key not present in list");
+			return;}
+		prev.next= temp.next;
 		temp = null;
-		
 	}
-	public void printList() {
+	void printList() {
 		Node temp = this.head;
-		while(temp != null) {
+		System.out.print("Current linked list:");
+		while(temp!=null) {
 			System.out.print(temp.data+" ");
 			temp = temp.next;
 		}
+		System.out.println();
 	}
 	public static void main(String[] args) {
-		
 		LinkedList llist = new LinkedList();
-		/*llist.head = new Node(1);
-		Node second = new Node(2);
-		Node third = new Node(3);
-		llist.head.next = second;
-		second.next = third;*/
 		llist.append(6);
-		llist.push(7);
-		llist.push(1);
-		llist.append(4);
-		llist.insertAfter(8, llist.head.next);
-		System.out.print("Current linked list:");
 		llist.printList();
+		
+		llist.push(7);
+		llist.printList();
+		
+		llist.push(1);
+		llist.printList();
+		
+		llist.append(4);
+		llist.printList();
+		
+		llist.insertAfter(8, llist.head);
+		llist.printList();
+		
 		llist.deleteNode(4);
-		System.out.print("\nLinked List after node deletion:");
 		llist.printList();
 	}
 }
